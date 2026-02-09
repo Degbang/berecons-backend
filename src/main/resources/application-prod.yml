@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL}}
+    driverClassName: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:${DATABASE_USERNAME:}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DATABASE_PASSWORD:}}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: never
+server:
+  port: ${PORT:8080}
+
+app:
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    password: ${ADMIN_PASSWORD:admin123}
+    resetKey: ${ADMIN_RESET_KEY:change-me}
+  jwt:
+    secret: ${JWT_SECRET:2c24c5f8b9f1dbe6cf0e4e6d8f3c2a1b9d4e7f8a1c2b3d4e5f6a7b8c9d0e1f2}
+    ttl-ms: ${JWT_TTL_MS:86400000}

@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:shipping;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  h2:
+    console:
+      enabled: true
+server:
+  port: 8080
+
+app:
+  admin:
+    username: admin
+    password: admin123
+    resetKey: change-me
+  jwt:
+    secret: 2c24c5f8b9f1dbe6cf0e4e6d8f3c2a1b9d4e7f8a1c2b3d4e5f6a7b8c9d0e1f2
+    ttl-ms: 86400000
