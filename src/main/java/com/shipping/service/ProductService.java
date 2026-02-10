@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -19,13 +20,20 @@ public class ProductService {
     this.productRepository = productRepository;
   }
 
+  @Transactional(readOnly = true)
   public List<Product> list(Optional<ProductStatus> status) {
-    return status.map(productRepository::findByStatus).orElseGet(productRepository::findAll);
+    List<Product> products = status.map(productRepository::findByStatus)
+        .orElseGet(productRepository::findAll);
+    products.forEach(product -> product.getImageUrls().size());
+    return products;
   }
 
+  @Transactional(readOnly = true)
   public Product get(Long id) {
-    return productRepository.findById(id)
+    Product product = productRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+    product.getImageUrls().size();
+    return product;
   }
 
   public Product create(ProductRequest request) {
