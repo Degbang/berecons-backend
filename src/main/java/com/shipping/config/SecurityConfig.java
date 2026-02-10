@@ -50,13 +50,15 @@ public class SecurityConfig {
         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .requestMatchers("/api/auth/login", "/api/auth/reset", "/error").permitAll()
+            .requestMatchers("/api/auth/login", "/api/auth/reset", "/api/health", "/error").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
             .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
             .requestMatchers(HttpMethod.PATCH, "/api/products/**").hasRole("ADMIN")
             .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN")
-            .requestMatchers("/api/wishlists/**", "/api/bookings/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/wishlists/**", "/api/bookings/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/wishlists/**", "/api/bookings/**").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.PATCH, "/api/wishlists/**", "/api/bookings/**").hasRole("ADMIN")
             .anyRequest().authenticated())
         .authenticationProvider(authenticationProvider())
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

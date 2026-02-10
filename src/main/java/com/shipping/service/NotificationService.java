@@ -57,7 +57,7 @@ public class NotificationService {
 
   private void sendSms(String to, String body) {
     if (!smsEnabled) {
-      log.info("[notify] SMS disabled. Would send to {}: {}", to, body);
+      log.info("[notify] SMS disabled. Would send to {} ({} chars).", to, body == null ? 0 : body.length());
       return;
     }
     if (accountSid.isBlank() || authToken.isBlank() || fromNumber.isBlank()) {
